@@ -1,16 +1,10 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-Encyclopedia
+Encyclopedia Error!
 {% endblock %}
 
 {% block body %}
 <h1>All Pages</h1>
-
-<ul>
-    {% for entry in entries %}
-    <li class="entry-link"> {{display}}></li>
-    {% endfor %}
-</ul>
-
+<h1 class="entry-link">{{message}}</h1>
 {% endblock %}

@@ -1,7 +1,20 @@
 from re import search
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from markdown2 import Markdown
 from . import util
+from django import forms
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label="", widget=forms.TextInput(
+        attrs={'placeholder': 'Search Wiki', 'style': 'width:100%'}))
+
+
+class Search(forms.Form):
+    item = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'myfieldclass', 'placeholder': 'Search'}))
 
 
 def index(request):
@@ -19,8 +32,9 @@ def entry(request, title):
 
         content = {
             'page': mkd_page,
-            'title': title
+            'title': title,
+            'form': SearchForm()
         }
         return render(request, "encyclopedia/entry.html", content)
     else:
-        return render(request, "encyclopedia/error.html", {"display": "page not found!", "form": search()})
+        return render(request, "encyclopedia/error_page.html", {"message": "The request page was not found", "form": search()})
